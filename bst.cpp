@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stack>
 using namespace std;
 class Node{
     int data;
@@ -106,6 +107,32 @@ class BST{
             }
         }
         return p;
+    }
+    void createBST(int *pre,int n){
+        int i=0;
+        root=new Node(pre[i++]);
+        Node *t;
+        Node *p=root;
+        stack<Node*> st;
+        while(i<n){
+            if(pre[i]<p->data){
+                t=new Node(pre[i++]);
+                p->lchild=t;
+                st.push(p);
+                p=t;
+            }
+            else{
+                if(pre[i]>p->data && pre[i]<st.empty()?32767:st.top()->data){
+                    t=new Node(pre[i++]);
+                    p->rchild=t;
+                    p=t;
+                }
+                else{
+                    p=st.top();
+                    st.pop();
+                }
+            }
+        }
     }
 };
 int main(){
